@@ -30,20 +30,22 @@ function searchPhoto(searchedImage) {
 }
 
 function photoTemplate(photo) {
-  return `<div>
-  <div class="image-container">
+  return photo.hits.map(
+    photo => `<li class="gallery-item"><a class="gallery-link" href="${photo.largeImageURL}">
     <img
-      src="${photo.hits.webformatURL}"
-      alt="#"
+      src="${photo.webformatURL}"
+      data-source="${photo.largeImageURL}"
+      alt="${photo.tags}"
+      class="gallery-image"
       
-    />
-  </div>
-  <div>
+    /></a>  
 
-      Likes:${photo.hits.likes}, Views:${photo.hits.views}, Comments:${photo.hits.comments}, Downloads:${photo.hits.downloads}
+  <div>
+<p>
+      Likes:${photo.likes}, Views:${photo.views}, Comments:${photo.comments}, Downloads:${photo.downloads}
     </p>
-  </div>
-</div>`;
+  </div></li>`
+  );
 }
 
 function renderPhoto(photo) {
@@ -51,12 +53,7 @@ function renderPhoto(photo) {
   photoContainer.insertAdjacentHTML('beforeend', markup);
 }
 
-// {
-//   webformatURL,
-//   largeImageURL,
-//   tags,
-//   likes,
-//   views,
-//   comments,
-//   downloads,
-// }
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
