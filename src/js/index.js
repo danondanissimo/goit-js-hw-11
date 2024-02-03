@@ -26,12 +26,19 @@ function searchPhoto(searchedImage) {
   const PARAMS = `?key=42185111-4f5cd61d4ffab1c12875fcbb6&q=${searchedImage}&image_type=photo&orientation=horizontal&safesearch=true`;
   const url = BASE_URL + PARAMS;
 
-  return fetch(url).then(res => res.json());
+  return fetch(url).then(res => {
+    if (res.status === 404) {
+      throw new Error(response.status);
+    } else {
+      return res.json();
+    }
+  });
 }
 
 function photoTemplate(photo) {
-  return photo.hits.map(
-    photo => `<li class="gallery-item"><a class="gallery-link" href="${photo.largeImageURL}">
+  return photo.hits
+    .map(
+      photo => `<li class="gallery-item"><a class="gallery-link" href="${photo.largeImageURL}">
     <img
       src="${photo.webformatURL}"
       data-source="${photo.largeImageURL}"
@@ -40,12 +47,13 @@ function photoTemplate(photo) {
       
     /></a>  
 
-  <div>
+  <div class="image-stats">
 <p>
       Likes:${photo.likes}, Views:${photo.views}, Comments:${photo.comments}, Downloads:${photo.downloads}
     </p>
   </div></li>`
-  );
+    )
+    .join('');
 }
 
 function renderPhoto(photo) {
