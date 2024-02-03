@@ -4,12 +4,14 @@ body {
 .block {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  /* justify-content: center; */
   margin-top: 25px;
 }
 
 .search-form {
   display: flex;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .form-control {
