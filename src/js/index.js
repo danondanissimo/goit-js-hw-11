@@ -17,7 +17,7 @@ searchForm.addEventListener('submit', e => {
   const name = e.target.elements.query.value;
 
   searchPhoto(name).then(data => {
-    renderPhoto(data.hits);
+    renderPhoto(data);
   });
 });
 
@@ -26,29 +26,21 @@ function searchPhoto(searchedImage) {
   const PARAMS = `?key=42185111-4f5cd61d4ffab1c12875fcbb6&q=${searchedImage}&image_type=photo&orientation=horizontal&safesearch=true`;
   const url = BASE_URL + PARAMS;
 
-  return fetch(url).then(res => console.log(res));
+  return fetch(url).then(res => res.json());
 }
 
-function photoTemplate({
-  webformatURL,
-  largeImageURL,
-  tags,
-  likes,
-  views,
-  comments,
-  downloads,
-}) {
-  return `<div class="hero-card card">
+function photoTemplate(photo) {
+  return `<div>
   <div class="image-container">
     <img
-      src="${webformatURL}"
+      src="${photo.hits.webformatURL}"
       alt="#"
-      class="hero-image"
+      
     />
   </div>
-  <div class="hero-body">
-    <p class="hero-bio">
-      Likes:${likes}, Views:${views}, Comments:${comments}, Downloads:${downloads}
+  <div>
+
+      Likes:${photo.hits.likes}, Views:${photo.hits.views}, Comments:${photo.hits.comments}, Downloads:${photo.hits.downloads}
     </p>
   </div>
 </div>`;
@@ -58,3 +50,13 @@ function renderPhoto(photo) {
   const markup = photoTemplate(photo);
   photoContainer.insertAdjacentHTML('beforeend', markup);
 }
+
+// {
+//   webformatURL,
+//   largeImageURL,
+//   tags,
+//   likes,
+//   views,
+//   comments,
+//   downloads,
+// }
