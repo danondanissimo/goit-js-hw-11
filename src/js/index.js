@@ -18,12 +18,11 @@ searchForm.addEventListener('submit', e => {
   e.preventDefault();
 
   const name = e.target.elements.query.value;
-  loader.style.display = 'inline-block';
-  searchPhoto(name)
-    .then(data => {
-      renderPhoto(data);
-    })
-    .finally((loader.style.display = 'none'));
+  // loader.style.display = 'inline-block';
+  searchPhoto(name).then(data => {
+    renderPhoto(data);
+  });
+  // .finally((loader.style.display = 'none'));
 
   e.target.reset();
 });
@@ -32,7 +31,7 @@ function searchPhoto(searchedImage) {
   const BASE_URL = 'https://pixabay.com/api/';
   const PARAMS = `?key=42185111-4f5cd61d4ffab1c12875fcbb6&q=${searchedImage}&image_type=photo&orientation=horizontal&safesearch=true`;
   const url = BASE_URL + PARAMS;
-
+  loader.style.display = 'inline-block';
   return fetch(url).then(res => {
     if (!res.ok) {
       throw new Error(res.status);
@@ -78,11 +77,12 @@ const lightbox = new SimpleLightbox('.gallery a', {
   captionDelay: 250,
 });
 
-photoContainer.addEventListener('load', () => {
-  loader.style.display = 'none';
-});
+// photoContainer.addEventListener('load', () => {
+//   loader.style.display = 'none';
+// });
 
 function renderPhoto(photo) {
+  photoContainer.replaceChildren();
   if (photo.hits.length === 0) {
     iziToast.show({
       message:
@@ -90,9 +90,10 @@ function renderPhoto(photo) {
       closeOnClick: true,
       closeOnEscape: true,
     });
+    loader.style.display = 'none';
   } else {
     const markup = photoTemplate(photo);
-
+    // loader.style.display = 'inline-block';
     photoContainer.insertAdjacentHTML('afterbegin', markup);
     lightbox.refresh();
   }
