@@ -47,10 +47,20 @@ function photoTemplate(photo) {
       
     /></a>  
 
-  <div class="image-stats">
-<p>
-      Likes:${photo.likes}, Views:${photo.views}, Comments:${photo.comments}, Downloads:${photo.downloads}
-    </p>
+  <div class="image-stats-block">
+<ul class="image-stats-list">
+  <li class="image-stats-item"><p class="image-stats-text">Likes:<br><span class="image-stats-value">${photo.likes}</span></p>
+</li>
+<li class="image-stats-item">
+  <p class="image-stats-text">Views:<br><span class="image-stats-value">${photo.views}</span></p>
+</li>
+<li class="image-stats-item">
+  <p class="image-stats-text">Comments:<br><span class="image-stats-value">${photo.comments}</span></p>
+</li>
+<li class="image-stats-item">
+  <p class="image-stats-text">Downloads:<br><span class="image-stats-value">${photo.downloads}</span></p>
+</li>
+</ul>
   </div></li>`
     )
     .join('');
