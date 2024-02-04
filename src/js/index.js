@@ -12,6 +12,8 @@ const searchForm = document.querySelector('.js-search-form');
 const photoContainer = document.querySelector('.js-photo-container');
 const loader = document.querySelector('.loader');
 
+loader.style.display = 'none';
+
 searchForm.addEventListener('submit', e => {
   e.preventDefault();
 
