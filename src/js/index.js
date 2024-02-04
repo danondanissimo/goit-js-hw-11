@@ -12,17 +12,18 @@ const searchForm = document.querySelector('.js-search-form');
 const photoContainer = document.querySelector('.js-photo-container');
 const loader = document.querySelector('.loader');
 
-loader.style.display = 'none';
+// loader.style.display = 'none';
 
 searchForm.addEventListener('submit', e => {
   e.preventDefault();
 
   const name = e.target.elements.query.value;
-  // loader.style.display = 'inline-block';
-  searchPhoto(name).then(data => {
-    renderPhoto(data);
-  });
-  // .finally((loader.style.display = 'none'));
+  loader.style.display = 'block';
+  searchPhoto(name)
+    .then(data => {
+      renderPhoto(data);
+    })
+    .finally(() => (loader.style.display = 'none'));
 
   e.target.reset();
 });
@@ -31,7 +32,7 @@ function searchPhoto(searchedImage) {
   const BASE_URL = 'https://pixabay.com/api/';
   const PARAMS = `?key=42185111-4f5cd61d4ffab1c12875fcbb6&q=${searchedImage}&image_type=photo&orientation=horizontal&safesearch=true`;
   const url = BASE_URL + PARAMS;
-  loader.style.display = 'inline-block';
+  // loader.style.display = 'inline-block';
   return fetch(url).then(res => {
     if (!res.ok) {
       throw new Error(res.status);
@@ -90,7 +91,7 @@ function renderPhoto(photo) {
       closeOnClick: true,
       closeOnEscape: true,
     });
-    loader.style.display = 'none';
+    // loader.style.display = 'none';
   } else {
     const markup = photoTemplate(photo);
     // loader.style.display = 'inline-block';
