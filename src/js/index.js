@@ -27,8 +27,8 @@ function searchPhoto(searchedImage) {
   const url = BASE_URL + PARAMS;
 
   return fetch(url).then(res => {
-    if (res.status === 404) {
-      throw new Error(response.status);
+    if (!res.ok) {
+      throw new Error(res.status);
     } else {
       return res.json();
     }
@@ -66,12 +66,14 @@ function photoTemplate(photo) {
     .join('');
 }
 
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
+
 function renderPhoto(photo) {
   const markup = photoTemplate(photo);
   photoContainer.insertAdjacentHTML('beforeend', markup);
 }
 
-const lightbox = new SimpleLightbox('.gallery a', {
-  captionsData: 'alt',
-  captionDelay: 250,
-});
+lightbox.refresh();
