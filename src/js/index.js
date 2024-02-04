@@ -10,15 +10,20 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const searchForm = document.querySelector('.js-search-form');
 const photoContainer = document.querySelector('.js-photo-container');
+const loader = document.querySelector('.loader');
 
 searchForm.addEventListener('submit', e => {
   e.preventDefault();
 
   const name = e.target.elements.query.value;
+  loader.style.display = 'inline-block';
+  searchPhoto(name)
+    .then(data => {
+      renderPhoto(data);
+    })
+    .finally((loader.style.display = 'none'));
 
-  searchPhoto(name).then(data => {
-    renderPhoto(data);
-  });
+  e.target.reset();
 });
 
 function searchPhoto(searchedImage) {
@@ -71,8 +76,22 @@ const lightbox = new SimpleLightbox('.gallery a', {
   captionDelay: 250,
 });
 
+photoContainer.addEventListener('load', () => {
+  loader.style.display = 'none';
+});
+
 function renderPhoto(photo) {
-  const markup = photoTemplate(photo);
-  photoContainer.insertAdjacentHTML('beforeend', markup);
-  lightbox.refresh();
+  if (photo.hits.length === 0) {
+    iziToast.show({
+      message:
+        'Sorry, there are no images matching your search query. Please try again!',
+      closeOnClick: true,
+      closeOnEscape: true,
+    });
+  } else {
+    const markup = photoTemplate(photo);
+
+    photoContainer.insertAdjacentHTML('afterbegin', markup);
+    lightbox.refresh();
+  }
 }
