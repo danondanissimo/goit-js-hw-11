@@ -74,6 +74,5 @@ const lightbox = new SimpleLightbox('.gallery a', {
 function renderPhoto(photo) {
   const markup = photoTemplate(photo);
   photoContainer.insertAdjacentHTML('beforeend', markup);
+  lightbox.refresh();
 }
-
-lightbox.refresh();
