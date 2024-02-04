@@ -77,6 +77,7 @@ body {
 
 .gallery-item {
   display: flex;
+  position: relative;
   flex-wrap: wrap;
   width: calc((100% - 48px) / 3);
   max-width: 360px;
@@ -93,7 +94,6 @@ body {
 
 .gallery-image {
   object-fit: cover;
-  position: relative;
 }
 
 .gallery-image:hover {
