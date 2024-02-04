@@ -21,5 +21,5 @@ import{S as l}from"./assets/vendor-b41a7778.js";(function(){const t=document.cre
   <p class="image-stats-text">Downloads:<br><span class="image-stats-value">${t.downloads}</span></p>
 </li>
 </ul>
-  </div></li>`).join("")}const f=new l(".gallery a",{captionsData:"alt",captionDelay:250});function d(a){const t=u(a);c.insertAdjacentHTML("beforeend",t)}f.refresh();
+  </div></li>`).join("")}const f=new l(".gallery a",{captionsData:"alt",captionDelay:250});function d(a){const t=u(a);c.insertAdjacentHTML("beforeend",t),f.refresh()}
 //# sourceMappingURL=commonHelpers.js.map
